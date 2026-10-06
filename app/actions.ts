@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { SESSION_COOKIE, requireAuth, safeEqual, sessionToken } from "@/lib/auth";
 import { db, getSettings, type ContactStatus } from "@/lib/db";
 import { generateReply, type Turn } from "@/lib/ai";
-import { sendText, setWebhook } from "@/lib/evolution";
+import { connectQr, connectionState, sendText, setWebhook } from "@/lib/evolution";
 import { saveOutgoing } from "@/lib/bot";
 
 const STATUSES: ContactStatus[] = ["new", "active", "handoff", "won", "lost"];
@@ -126,6 +126,18 @@ export async function testBot(history: Turn[]) {
   try {
     const settings = await getSettings();
     return { ok: true as const, ...(await generateReply(settings, history.slice(-20))) };
+  } catch (err) {
+    return { ok: false as const, error: (err as Error).message };
+  }
+}
+
+/** WhatsApp bağlantı durumunu, bağlı değilse okutulacak QR kodunu döndürür. */
+export async function whatsappStatus(withQr: boolean) {
+  await requireAuth();
+  try {
+    const state = await connectionState();
+    const qr = state !== "open" && withQr ? await connectQr() : null;
+    return { ok: true as const, state, qr };
   } catch (err) {
     return { ok: false as const, error: (err as Error).message };
   }

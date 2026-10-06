@@ -1,4 +1,5 @@
 import SettingsForm, { WebhookButton } from "@/components/SettingsForm";
+import WhatsappConnect from "@/components/WhatsappConnect";
 import { getSettings, missingEnv } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +21,7 @@ export default async function SettingsPage() {
             <code>.env.local</code> dosyasında eksik: {missing.join(", ")}
           </p>
         )}
+        {!missing.some((k) => k.startsWith("EVOLUTION")) && <WhatsappConnect />}
         <p className="text-sm text-zinc-600">
           Evolution&apos;ın gelen mesajları bu panele iletmesi için webhook adresinin bir kez
           kaydedilmesi gerekir. Adres: <code>{appUrl || "(APP_URL tanımlı değil)"}/api/webhook/evolution</code>

@@ -78,14 +78,18 @@ supabase/schema.sql   Veritabanı şeması
    ```
 2. **Supabase:** Bir proje açın, SQL Editor'de [supabase/schema.sql](supabase/schema.sql) içeriğini çalıştırın. Proje URL'sini ve gizli (secret / service_role) anahtarı alın.
 3. **Gemini:** [Google AI Studio](https://aistudio.google.com/apikey) üzerinden bir API anahtarı oluşturun.
-4. **Evolution API:** Railway'de "Evolution API" şablonunu deploy edin, `/manager` adresinden bir instance oluşturup QR kodu WhatsApp > Bağlı Cihazlar ile okutun.
+4. **Evolution API:** Yerelde Docker ile çalıştırmak için `evolution/.env` dosyasına `EVOLUTION_API_KEY=<rastgele bir anahtar>` yazın ve başlatın:
+   ```bash
+   docker compose -f evolution/docker-compose.yml up -d
+   ```
+   Aynı anahtarı `.env.local` içindeki `EVOLUTION_API_KEY`'e, adresi (`http://localhost:8080`) `EVOLUTION_API_URL`'e yazın. QR kodu panelde **Bot Ayarları > WhatsApp bağlantısı** bölümünde görünür; WhatsApp > Bağlı Cihazlar ile okutun. (Alternatif: Evolution API'yi Railway gibi bir sunucuya deploy edin.)
 5. **Ortam değişkenleri:** `.env.example` dosyasını `.env.local` adıyla kopyalayıp doldurun.
 6. **Çalıştırma**
    ```bash
    npm run dev
    ```
    Panel: http://localhost:3000
-7. **Webhook:** Uygulamayı internetten erişilebilir bir adrese taşıyın (deploy ya da tünel), adresi `APP_URL`'e yazın ve panelde **Bot Ayarları > Webhook'u Evolution'a kaydet** düğmesine basın.
+7. **Webhook:** `APP_URL`'e Evolution'ın panele ulaşacağı adresi yazın (ikisi de yereldeyse `http://host.docker.internal:3000`; Evolution uzaktaysa panelin internetten erişilen adresi) ve panelde **Bot Ayarları > Webhook'u Evolution'a kaydet** düğmesine basın.
 
 ## Test
 

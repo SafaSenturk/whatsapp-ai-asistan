@@ -40,6 +40,13 @@ export async function connectionState(): Promise<string> {
   return data?.instance?.state ?? "unknown";
 }
 
+/** Eşleştirme için güncel QR kodunu (data URL) döndürür; bağlıysa null. */
+export async function connectQr(): Promise<string | null> {
+  const { instance } = config();
+  const data = await call(`/instance/connect/${encodeURIComponent(instance)}`);
+  return data?.base64 ?? null;
+}
+
 /** Evolution'a gelen mesajları bu uygulamanın webhook adresine yollamasını söyler. */
 export async function setWebhook(webhookUrl: string) {
   const { instance } = config();
