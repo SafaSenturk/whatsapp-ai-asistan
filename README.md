@@ -86,6 +86,27 @@ supabase/schema.sql   Veritabanı şeması
    Panel: http://localhost:3000
 7. **Webhook:** Uygulamayı internetten erişilebilir bir adrese taşıyın (deploy ya da tünel), adresi `APP_URL`'e yazın ve panelde **Bot Ayarları > Webhook'u Evolution'a kaydet** düğmesine basın.
 
+## Test
+
+```bash
+npm run test:webhook
+```
+
+[scripts/webhook-test.mjs](scripts/webhook-test.mjs), Evolution API'yi taklit eden sahte bir sunucu açar, uygulamaya sahte WhatsApp mesajları gönderir ve veritabanındaki sonucu doğrular. Supabase ve Gemini gerçektir; yalnızca WhatsApp'a gönderim taklit edilir. Sınanan durumlar:
+
+- Gizli anahtarı olmayan ya da yanlış olan isteklerin reddedilmesi
+- Kişinin ve mesajların kaydedilmesi, cevabın işletme bilgisine dayanması
+- Tekrarlanan mesajın ve botun kendi mesajının yankısının çift işlenmemesi
+- Grup ve metin dışı mesajların yok sayılması
+- Anahtar kelimeyle ve modelin kararıyla insana devir, devirden sonra botun susması
+- Bot kapalıyken mesajın kaydedilip cevap verilmemesi
+
+Test, dev sunucusu kapalıyken çalıştırılmalıdır ve bittiğinde kendi verisini siler.
+
+## Durum
+
+Mesaj akışının tamamı yukarıdaki testle doğrulanmıştır. Gerçek bir WhatsApp numarasıyla canlı bağlantı (Evolution API kurulumu ve QR eşleştirme) henüz yapılmamıştır; bunun için gereken tek şey kurulumdaki 4. ve 7. adımlardır.
+
 ## Bilinen sınırlar
 
 - Yalnızca metin mesajları işlenir; ses, görsel ve belge yok sayılır.
