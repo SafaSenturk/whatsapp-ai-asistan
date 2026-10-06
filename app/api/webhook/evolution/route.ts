@@ -8,10 +8,7 @@ export const maxDuration = 60;
 function authorized(req: NextRequest): boolean {
   const expected = process.env.WEBHOOK_SECRET;
   if (!expected) return false;
-  const given =
-    req.headers.get("x-webhook-secret") ??
-    req.nextUrl.searchParams.get("secret") ??
-    "";
+  const given = req.headers.get("x-webhook-secret") ?? "";
   const a = Buffer.from(given);
   const b = Buffer.from(expected);
   return a.length === b.length && timingSafeEqual(a, b);

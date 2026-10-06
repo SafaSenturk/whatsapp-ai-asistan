@@ -149,7 +149,7 @@ export async function connectWebhook() {
   const secret = process.env.WEBHOOK_SECRET;
   if (!appUrl || !secret) return "APP_URL ve WEBHOOK_SECRET tanımlı olmalı.";
   try {
-    await setWebhook(`${appUrl}/api/webhook/evolution?secret=${encodeURIComponent(secret)}`);
+    await setWebhook(`${appUrl}/api/webhook/evolution`, secret);
     return "Webhook Evolution'a kaydedildi.";
   } catch (err) {
     return `Kaydedilemedi: ${(err as Error).message}`;

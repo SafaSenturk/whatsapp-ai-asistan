@@ -48,7 +48,7 @@ export async function connectQr(): Promise<string | null> {
 }
 
 /** Evolution'a gelen mesajları bu uygulamanın webhook adresine yollamasını söyler. */
-export async function setWebhook(webhookUrl: string) {
+export async function setWebhook(webhookUrl: string, secret: string) {
   const { instance } = config();
   return call(`/webhook/set/${encodeURIComponent(instance)}`, {
     method: "POST",
@@ -56,6 +56,8 @@ export async function setWebhook(webhookUrl: string) {
       webhook: {
         enabled: true,
         url: webhookUrl,
+        // Gizli anahtar adreste değil başlıkta taşınır; böylece sunucu kayıtlarına düşmez.
+        headers: { "x-webhook-secret": secret },
         webhookByEvents: false,
         webhookBase64: false,
         events: ["MESSAGES_UPSERT"],

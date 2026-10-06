@@ -110,7 +110,7 @@ Test, dev sunucusu kapalıyken çalıştırılmalıdır ve bittiğinde kendi ver
 
 ## Durum
 
-Mesaj akışının tamamı yukarıdaki testle doğrulanmıştır. Gerçek bir WhatsApp numarasıyla canlı bağlantı (Evolution API kurulumu ve QR eşleştirme) henüz yapılmamıştır; bunun için gereken tek şey kurulumdaki 4. ve 7. adımlardır.
+Mesaj akışı yukarıdaki testle doğrulanmış, ayrıca yerelde çalışan Evolution API üzerinden gerçek bir WhatsApp numarasıyla denenmiştir: gelen mesajlar kaydedilmiş, bot işletme bilgilerine dayanarak cevap vermiş, bilmediği soruda konuşmayı devretmiştir. Sistem şu an yerel ortamda çalışır; kesintisiz kullanım için panelin ve Evolution API'nin bir sunucuya taşınması gerekir.
 
 ## Bilinen sınırlar
 
