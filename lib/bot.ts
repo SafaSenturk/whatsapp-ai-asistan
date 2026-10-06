@@ -82,7 +82,19 @@ async function handoff(contact: Contact, message: string) {
   }
 }
 
+/** TEST_NUMBERS doluysa yalnızca listedeki numaralar işlenir (deneme modu). */
+export function testNumbers(): string[] {
+  return (process.env.TEST_NUMBERS ?? "")
+    .split(",")
+    .map((n) => n.replace(/\D/g, "").replace(/^0+/, ""))
+    .filter((n) => n.length >= 10);
+}
+
 export async function handleIncoming(m: Incoming) {
+  // Deneme modunda listede olmayan kişilerin mesajları kaydedilmez ve cevaplanmaz.
+  const allowed = testNumbers();
+  if (allowed.length && !allowed.some((n) => m.phone.endsWith(n))) return;
+
   const contact = await upsertContact(m);
 
   // Aynı mesaj iki kez gelirse (Evolution yeniden denerse) ikinci kez işlenmez.

@@ -1,6 +1,7 @@
 ﻿import Link from "next/link";
 import { db, getSettings, missingEnv } from "@/lib/db";
 import { connectionState } from "@/lib/evolution";
+import { testNumbers } from "@/lib/bot";
 
 export const dynamic = "force-dynamic";
 
@@ -65,6 +66,13 @@ export default async function DashboardPage() {
           );
         })}
       </div>
+
+      {testNumbers().length > 0 && (
+        <p className="max-w-xl rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800">
+          Deneme modu açık: bot yalnızca {testNumbers().length} numarayla ilgileniyor, diğer
+          mesajlar kaydedilmiyor. Kapatmak için <code>TEST_NUMBERS</code> değerini boşaltın.
+        </p>
+      )}
 
       <div className="card max-w-xl space-y-2 text-sm">
         <div className="flex justify-between">

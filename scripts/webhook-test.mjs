@@ -116,6 +116,7 @@ const app = spawn(`npx next dev -p ${APP_PORT}`, {
     EVOLUTION_API_KEY: "test-key",
     EVOLUTION_INSTANCE: "test",
     WEBHOOK_SECRET: SECRET,
+    TEST_NUMBERS: process.env.WEBHOOK_TEST_ALLOW ?? "",
   },
 });
 

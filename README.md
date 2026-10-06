@@ -10,6 +10,7 @@ WhatsApp'tan yazan müşterilere yapay zekâ ile otomatik cevap veren, konuşmal
 - **Kişi takibi (CRM):** Her yazan kişi otomatik kaydedilir; durum (yeni, görüşülüyor, kazanıldı…) ve not tutulur.
 - **Panelden ayar:** İşletme bilgileri, üslup, devir kelimeleri ve model kod değiştirmeden güncellenir.
 - **Deneme ekranı:** Botun cevapları WhatsApp'a göndermeden sınanır.
+- **Deneme modu:** `TEST_NUMBERS` tanımlıyken bot yalnızca listedeki numaralarla ilgilenir; kişisel bir numarayla güvenle sınanabilir.
 - **Dayanıklılık:** Model yoğunken yedek modele geçer; aynı mesaj iki kez gelirse ikinci kez işlenmez.
 
 ## Mimari
