@@ -13,6 +13,18 @@ WhatsApp'tan yazan müşterilere yapay zekâ ile otomatik cevap veren, konuşmal
 - **Deneme modu:** `TEST_NUMBERS` tanımlıyken bot yalnızca listedeki numaralarla ilgilenir; kişisel bir numarayla güvenle sınanabilir.
 - **Dayanıklılık:** Model yoğunken yedek modele geçer; aynı mesaj iki kez gelirse ikinci kez işlenmez.
 
+## Ekran görüntüleri
+
+Görüntülerdeki kişiler ve konuşmalar örnek veridir.
+
+| Gelen kutusu | Konuşma |
+|---|---|
+| ![Gelen kutusu](docs/screenshots/gelen-kutusu.jpg) | ![Bot ile konuşma](docs/screenshots/konusma.jpg) |
+
+| İnsana devir | Özet |
+|---|---|
+| ![İnsana devredilen konuşma](docs/screenshots/insana-devir.jpg) | ![Özet sayfası](docs/screenshots/ozet.jpg) |
+
 ## Mimari
 
 ```mermaid
