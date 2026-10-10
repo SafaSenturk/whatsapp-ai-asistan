@@ -72,7 +72,8 @@ export async function transactionsBetween(
 }
 
 export async function budgetsOf(userId: string): Promise<Budget[]> {
-  const { data } = await db().from("budgets").select("*").eq("user_id", userId);
+  const { data, error } = await db().from("budgets").select("*").eq("user_id", userId);
+  if (error) throw new Error(`Bütçeler okunamadı: ${error.message}`);
   return (data ?? []).map((b) => ({ ...(b as Budget), monthly_limit: Number(b.monthly_limit) }));
 }
 

@@ -1,5 +1,6 @@
 import { setPlan } from "@/app/actions";
 import WebhookButton from "@/components/WebhookButton";
+import { telegramWebhookInfo } from "@/lib/telegram";
 import WhatsappConnect from "@/components/WhatsappConnect";
 import { requireAdmin } from "@/lib/auth";
 import { db, missingEnv, type User } from "@/lib/db";
@@ -20,16 +21,18 @@ export default async function AdminPage({ searchParams }: PageProps<"/app/admin"
   const [{ data }, { count: total }, { count: linked }, { data: proRows }] = await Promise.all([
     query,
     db().from("users").select("id", { count: "exact", head: true }),
-    db().from("users").select("id", { count: "exact", head: true }).not("wa_jid", "is", null),
+    db().from("users").select("id", { count: "exact", head: true }).or("wa_jid.not.is.null,tg_chat_id.not.is.null"),
     db().from("users").select("plan, plan_until").eq("plan", "pro"),
   ]);
   const users = (data ?? []) as User[];
   const proCount = ((proRows ?? []) as User[]).filter((u) => isPro(u)).length;
   const whatsappReady = missingEnv("whatsapp").length === 0;
+  const telegramReady = missingEnv("telegram").length === 0;
+  const tgInfo = telegramReady ? await telegramWebhookInfo().catch((err: Error) => ({ error: err.message })) : null;
 
   const stats = [
     { label: "Kullanıcı", value: total ?? 0 },
-    { label: "WhatsApp bağlı", value: linked ?? 0 },
+    { label: "Mesajlaşma bağlı", value: linked ?? 0 },
     { label: "Aktif Pro", value: proCount },
     { label: "Dönüşüm", value: total ? `%${Math.round((proCount / total) * 100)}` : "—" },
   ];
@@ -47,12 +50,27 @@ export default async function AdminPage({ searchParams }: PageProps<"/app/admin"
         ))}
       </div>
 
+      <section className="card space-y-3">
+        <h2 className="font-semibold">Telegram botu</h2>
+        {!telegramReady ? (
+          <p className="text-sm text-zinc-600">Eksik ortam değişkenleri: {missingEnv("telegram").join(", ")}</p>
+        ) : tgInfo && "error" in tgInfo ? (
+          <p className="text-sm text-red-600">Telegram&apos;a ulaşılamadı: {tgInfo.error}</p>
+        ) : (
+          <p className="text-sm text-zinc-600">
+            Webhook: {tgInfo?.url ? <code>{tgInfo.url}</code> : <span className="text-amber-700">kayıtlı değil</span>}
+            {tgInfo?.last_error_message && <span className="block text-red-600">Son hata: {tgInfo.last_error_message}</span>}
+          </p>
+        )}
+        {telegramReady && <WebhookButton target="telegram" />}
+      </section>
+
       <section className="card space-y-4">
         <h2 className="font-semibold">Bot WhatsApp numarası</h2>
         {whatsappReady ? (
           <>
             <WhatsappConnect />
-            <WebhookButton />
+            <WebhookButton target="whatsapp" />
           </>
         ) : (
           <p className="text-sm text-zinc-600">Eksik ortam değişkenleri: {missingEnv("whatsapp").join(", ")}</p>

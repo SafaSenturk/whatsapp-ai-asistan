@@ -16,3 +16,16 @@ export function shortDate(iso: string): string {
     timeZone: "UTC",
   });
 }
+
+export const SOURCE_LABELS = {
+  web: "Panel",
+  whatsapp: "WhatsApp",
+  telegram: "Telegram",
+  receipt: "Fiş",
+  voice: "Ses",
+  email: "Banka",
+} as const;
+
+export function monthName(month: string): string {
+  return new Date(`${month}-01T00:00:00Z`).toLocaleDateString("tr-TR", { month: "long", year: "numeric", timeZone: "UTC" });
+}

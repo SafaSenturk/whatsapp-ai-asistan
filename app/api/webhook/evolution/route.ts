@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { safeEqual } from "@/lib/auth";
-import { handleWhatsapp } from "@/lib/whatsapp";
+import { handleIncoming } from "@/lib/channels";
+import { downloadMedia } from "@/lib/evolution";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -42,12 +43,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await handleWhatsapp({
-      jid,
-      phone: jid.split("@")[0].split(":")[0],
-      waMessageId: key.id,
+    await handleIncoming({
+      channel: "whatsapp",
+      address: jid,
+      handle: jid.split("@")[0].split(":")[0],
+      externalId: `wa:${key.id}`,
       text,
       mediaKind,
+      loadMedia: () => downloadMedia(key.id),
     });
   } catch (err) {
     console.error("[webhook] mesaj işlenemedi:", err);

@@ -1,16 +1,15 @@
 import Link from "next/link";
 import { deleteTransaction } from "@/app/actions";
+import { BucketSelect } from "@/components/BucketPicker";
 import TxForm from "@/components/TxForm";
 import { requireUser } from "@/lib/auth";
 import { categoryLabel } from "@/lib/categories";
 import { daysInMonth, today } from "@/lib/dates";
-import { money, shortDate } from "@/lib/format";
+import { SOURCE_LABELS, money, shortDate } from "@/lib/format";
 import { isPro } from "@/lib/plans";
 import { summarize, transactionsBetween } from "@/lib/stats";
 
 export const dynamic = "force-dynamic";
-
-const SOURCE_LABELS = { web: "Panel", whatsapp: "WhatsApp", receipt: "Fiş", voice: "Ses" } as const;
 
 function shiftMonth(month: string, n: number): string {
   const [y, m] = month.split("-").map(Number);
@@ -65,6 +64,7 @@ export default async function TransactionsPage({ searchParams }: PageProps<"/app
                 <th className="px-5 py-2 font-medium">Tarih</th>
                 <th className="px-2 py-2 font-medium">Açıklama</th>
                 <th className="px-2 py-2 font-medium">Kategori</th>
+                <th className="px-2 py-2 font-medium">Kova</th>
                 <th className="px-2 py-2 font-medium">Kaynak</th>
                 <th className="px-2 py-2 text-right font-medium">Tutar</th>
                 <th className="px-5 py-2" />
@@ -76,6 +76,7 @@ export default async function TransactionsPage({ searchParams }: PageProps<"/app
                   <td className="whitespace-nowrap px-5 py-2 text-zinc-500">{shortDate(t.occurred_on)}</td>
                   <td className="px-2 py-2">{t.description || "—"}</td>
                   <td className="whitespace-nowrap px-2 py-2">{categoryLabel(t.category)}</td>
+                  <td className="px-2 py-2">{t.type === "expense" ? <BucketSelect id={t.id} value={t.bucket} /> : <span className="text-zinc-400">—</span>}</td>
                   <td className="px-2 py-2 text-zinc-500">{SOURCE_LABELS[t.source]}</td>
                   <td className={`whitespace-nowrap px-2 py-2 text-right tabular-nums ${t.type === "income" ? "text-emerald-700" : ""}`}>
                     {t.type === "income" ? "+" : "−"}
@@ -91,7 +92,7 @@ export default async function TransactionsPage({ searchParams }: PageProps<"/app
               ))}
               {txs.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-5 py-6 text-center text-zinc-500">Bu ay kayıt yok.</td>
+                  <td colSpan={7} className="px-5 py-6 text-center text-zinc-500">Bu ay kayıt yok.</td>
                 </tr>
               )}
             </tbody>

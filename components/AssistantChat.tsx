@@ -5,7 +5,15 @@ import { askAssistant } from "@/app/actions";
 
 type Line = { role: "user" | "assistant"; text: string };
 
-const EXAMPLES = ["kahve 85", "dün taksi 320", "maaş yattı 45000", "bu ay ne kadar harcadım?", "markete aylık 5000 bütçe koy"];
+const EXAMPLES = [
+  "kahve 85",
+  "dün taksi 320",
+  "yaşama at",
+  "bu ay markete ne kadar harcadım?",
+  "hedeflerime ne kadar kaldı?",
+  "ay sonunda ne kalır?",
+  "önerilerin var mı?",
+];
 
 /** Fotoğrafı tarayıcıda küçültür; sunucuya giden veri 1 MB'ın altında kalır. */
 async function shrink(file: File): Promise<{ base64: string; mimeType: string }> {

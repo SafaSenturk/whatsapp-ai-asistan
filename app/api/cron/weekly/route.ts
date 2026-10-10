@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { safeEqual } from "@/lib/auth";
 import { db, type User } from "@/lib/db";
 import { weeklyDigest } from "@/lib/digest";
-import { sendText } from "@/lib/evolution";
+import { notifyUser } from "@/lib/channels";
 import { isPro } from "@/lib/plans";
 
 export const dynamic = "force-dynamic";
@@ -24,18 +24,16 @@ export async function GET(req: NextRequest) {
     .select("*")
     .eq("plan", "pro")
     .eq("weekly_digest", true)
-    .not("wa_jid", "is", null);
+    .or("wa_jid.not.is.null,tg_chat_id.not.is.null");
 
   let sent = 0;
   let failed = 0;
   for (const user of (data ?? []) as User[]) {
-    if (!isPro(user) || !user.wa_jid) continue;
+    if (!isPro(user)) continue;
     try {
       const text = await weeklyDigest(user);
       if (!text) continue;
-      const id = await sendText(user.wa_jid, text);
-      await db().from("chat_messages").insert({ user_id: user.id, role: "assistant", body: text, channel: "whatsapp", wa_message_id: id });
-      sent++;
+      if (await notifyUser(user, text)) sent++;
     } catch (err) {
       console.error("[cron] özet gönderilemedi:", user.id, err);
       failed++;

@@ -8,9 +8,9 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Cüzdan — WhatsApp'tan yapay zekâ ile para yönetimi",
+  title: "Cüzdan — yapay zekâ destekli kişisel finans paneli",
   description:
-    "Harcamanı WhatsApp'tan yaz, fişin fotoğrafını çek ya da sesli söyle. Cüzdan kaydeder, kategorize eder, bütçeni takip eder.",
+    "Banka harcamaların kendiliğinden düşer, 50/30/20 kovalarıyla bütçeni yönetirsin; Telegram ve WhatsApp asistanıyla fiş at, soru sor, ay sonunu önceden gör.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

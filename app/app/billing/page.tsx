@@ -13,7 +13,7 @@ export default async function BillingPage() {
   const checkoutHref = checkout
     ? `${checkout}${checkout.includes("?") ? "&" : "?"}email=${encodeURIComponent(user.email)}`
     : null;
-  const contact = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+  const contact = process.env.CONTACT_EMAIL;
 
   return (
     <div className="max-w-3xl space-y-6">

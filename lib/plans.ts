@@ -2,6 +2,7 @@ import type { User } from "./db";
 
 /** Ücretsiz planda bir ayda kaydedilebilecek işlem sayısı. */
 export const FREE_MONTHLY_LIMIT = 60;
+export const FREE_GOAL_LIMIT = 2;
 
 export const PLANS = {
   free: {
@@ -9,16 +10,18 @@ export const PLANS = {
     price: "0 ₺",
     features: [
       `Ayda ${FREE_MONTHLY_LIMIT} işlem`,
-      "WhatsApp'tan yazarak kayıt",
-      "Aylık özet ve kategori raporu",
-      "3 kategoriye bütçe",
+      "WhatsApp ve Telegram'dan yazarak kayıt",
+      "50/30/20 kovaları ve aylık özet",
+      "Gelir, sabit gider ve 6 aylık tahmin",
+      `${FREE_GOAL_LIMIT} hedef, 3 kategori bütçesi`,
     ],
   },
   pro: {
     name: "Pro",
-    price: process.env.NEXT_PUBLIC_PRO_PRICE || "79 ₺ / ay",
+    price: process.env.PRO_PRICE || "79 ₺ / ay",
     features: [
-      "Sınırsız işlem",
+      "Banka e-postalarından otomatik kayıt",
+      "Sınırsız işlem ve hedef",
       "Fiş fotoğrafından otomatik kayıt",
       "Sesli mesajla kayıt",
       "Sınırsız bütçe ve aşım uyarısı",

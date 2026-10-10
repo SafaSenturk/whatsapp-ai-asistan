@@ -2,31 +2,33 @@ import Link from "next/link";
 import { FREE_MONTHLY_LIMIT, PLANS } from "@/lib/plans";
 
 const CHAT = [
-  { me: true, text: "migros 1.240" },
-  { me: false, text: "✅ Kaydedildi:\n−1.240 ₺ Migros (Market)\n⚠️ Market bütçesinin %84'ünü kullandın. Kalan: 760 ₺" },
+  { me: false, text: "💳 Bankadan 1 yeni işlem:\n−249 ₺ Migros · öneri: Mecburi\n\nKovası için mecburi, yaşam ya da serbest yaz." },
+  { me: true, text: "mecburi" },
+  { me: false, text: "👌 249 ₺ Migros → Mecburi" },
   { me: true, text: "📷 [fiş fotoğrafı]" },
-  { me: false, text: "✅ Kaydedildi:\n−386,50 ₺ Starbucks (Yeme-İçme) · 09.10" },
-  { me: true, text: "bu ay ne kadar harcadım?" },
-  { me: false, text: "📊 Bu ay\nGider: 18.420 ₺\nGelir: 45.000 ₺\nNet: +26.580 ₺\n\nEn çok:\n• Kira: 9.000 ₺\n• Market: 4.240 ₺" },
+  { me: false, text: "✅ Kaydedildi:\n−386,50 ₺ Starbucks (Yeme-İçme) → Yaşam" },
+  { me: true, text: "hedeflerime ne kadar kaldı?" },
+  { me: false, text: "🎯 Hedeflerin\n✅ Mart tatili: tamamlandı\n• Kamera: %62 · 17.000 ₺ kaldı\n• Acil durum fonu: %40 · 90.000 ₺ kaldı" },
 ];
 
 const FEATURES = [
-  { icon: "💬", title: "Yaz, gerisini unut", text: "\"kahve 85\", \"dün taksi 320\", \"maaş yattı 45000\". Uygulama açmadan, form doldurmadan." },
-  { icon: "🧾", title: "Fişin fotoğrafını çek", text: "Yapay zekâ fişteki toplamı, mağazayı ve tarihi okur, doğru kategoriye yazar." },
-  { icon: "🎙️", title: "Sesli söyle", text: "Yolda mısın? Sesli mesaj gönder; Cüzdan anlar ve kaydeder." },
-  { icon: "🎯", title: "Bütçe uyarıları", text: "Kategori bazlı aylık bütçe koy. %80'e gelince ve aşınca WhatsApp'tan haber verir." },
-  { icon: "📊", title: "Soru sor, cevap al", text: "\"Bu ay markete ne verdim?\" Rakamlar anında, sohbet içinde." },
-  { icon: "🗓️", title: "Haftalık rapor", text: "Her pazartesi geçen haftanın özeti ve bir önceki haftayla karşılaştırması." },
+  { icon: "🏦", title: "Banka harcamaları kendiliğinden düşer", text: "Bankanın e-posta bildirimlerini Cüzdan okur; harcama yaptığın an panelde. Banka şifresi gerekmez." },
+  { icon: "🪣", title: "50/30/20 kovaları", text: "Her harcama Mecburi, Yaşam ya da Serbest kovasına. Gelirine göre hangi kovada ne kadar kaldığını gör." },
+  { icon: "💬", title: "Telegram ve WhatsApp asistanı", text: "\"kahve 85\" yaz, fişin fotoğrafını at ya da sesli söyle. \"Bu ay markete ne verdim?\" diye sor." },
+  { icon: "🔮", title: "6 aylık tahmin", text: "Gelirlerin, bekleyen tahsilatların ve sabit giderlerinle önümüzdeki ayların sonunda ne kalacağını önceden gör." },
+  { icon: "🎯", title: "Hedefler ve acil durum fonu", text: "Tatil, ekipman, acil durum fonu… Her hedefe ne kadar kaldığını ve ayda ne ayırman gerektiğini bil." },
+  { icon: "🗓️", title: "Haftalık rapor ve uyarılar", text: "Bütçe aşımında anında uyarı, her pazartesi geçen haftanın özeti." },
 ];
 
 const STEPS = [
   { n: "1", title: "Ücretsiz hesap aç", text: "E-postanla 1 dakikada kayıt ol." },
-  { n: "2", title: "WhatsApp'ı bağla", text: "Panelde çıkan 6 haneli kodu Cüzdan numarasına gönder." },
-  { n: "3", title: "Harcamalarını yaz", text: "Gerisini Cüzdan halleder; panelde grafiklerle izle." },
+  { n: "2", title: "Bankanı ve Telegram'ı bağla", text: "Banka bildirimlerini e-postaya aç, hazır kodu Gmail'ine yapıştır; Telegram'ı tek tıkla bağla." },
+  { n: "3", title: "Kovalarını yönet", text: "Harcamalar kendiliğinden düşer; sen sadece kovasını seç ve paranı yönet." },
 ];
 
 const FAQ = [
-  { q: "Banka hesabıma erişiyor musunuz?", a: "Hayır. Cüzdan yalnızca senin yazdığın, söylediğin ya da fotoğrafını çektiğin harcamaları kaydeder. Banka şifresi istemeyiz." },
+  { q: "Banka hesabıma erişiyor musunuz?", a: "Hayır. Banka şifresi ya da internet bankacılığı erişimi istemeyiz. Yalnızca bankanın sana e-postayla gönderdiği işlem bildirimlerini, senin Gmail'inde çalışan ve istediğin an kapatabileceğin küçük bir kodla okuruz." },
+  { q: "Hangi bankalarla çalışıyor?", a: "E-posta bildirimi gönderen her bankayla: Garanti BBVA, Yapı Kredi, Ziraat, İş Bankası, Akbank, QNB, Enpara ve diğerleri. Yapay zekâ bildirimin biçimine bakmadan tutarı, işyerini ve tarihi okur." },
   { q: "Verilerim güvende mi?", a: "Veriler şifreli bağlantıyla taşınır, yalnızca senin hesabına bağlıdır ve hesabını sildiğinde tamamen silinir. Verilerin reklam için kullanılmaz ve satılmaz." },
   { q: "Yapay zekâ yanlış kaydederse?", a: "\"geri al\" yazman yeterli; son kayıt silinir. Panelden de istediğin kaydı silebilirsin." },
   { q: "Pro'yu nasıl iptal ederim?", a: "Taahhüt yok. Dönem sonunda yenilemezsen hesabın otomatik olarak ücretsiz plana döner, verilerin kaybolmaz." },
@@ -56,11 +58,11 @@ export default function Home() {
             Yapay zekâ destekli kişisel finans asistanı
           </p>
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Paranı WhatsApp&apos;tan yönet.
+            Para seni değil, sen parayı yönet.
           </h1>
           <p className="mt-4 text-lg text-zinc-600">
-            Harcamanı yaz, fişin fotoğrafını çek ya da sesli söyle. Cüzdan kaydeder, kategorize eder,
-            bütçeni aşmadan önce seni uyarır. Uygulama indirmek yok, tablo doldurmak yok.
+            Banka harcamaların kendiliğinden düşer, yapay zekâ kategorize eder, sen 50/30/20 kovalarına yerleştirirsin.
+            Telegram ya da WhatsApp&apos;tan asistanına sor, fiş at, ay sonunu önceden gör. Tablo doldurmak yok.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/signup" className="btn px-6 py-3 text-base">
@@ -77,8 +79,8 @@ export default function Home() {
           <div className="mb-2 flex items-center gap-2 rounded-2xl bg-emerald-700 px-3 py-2 text-white">
             <span className="text-xl">👛</span>
             <div>
-              <div className="text-sm font-semibold">Cüzdan</div>
-              <div className="text-xs opacity-80">çevrimiçi</div>
+              <div className="text-sm font-semibold">Cüzdan asistanı</div>
+              <div className="text-xs opacity-80">Telegram · WhatsApp</div>
             </div>
           </div>
           <div className="space-y-2 p-1">
@@ -99,9 +101,9 @@ export default function Home() {
 
       <section className="border-y border-zinc-100 bg-zinc-50 py-16">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-center text-2xl font-bold md:text-3xl">Bütçe tutmanın en kolay yolu</h2>
+          <h2 className="text-center text-2xl font-bold md:text-3xl">Yapay zekâ destekli kişisel finans paneli</h2>
           <p className="mx-auto mt-2 max-w-2xl text-center text-zinc-600">
-            İnsanlar harcama takibini bırakır çünkü zahmetlidir. Cüzdan zaten her gün kullandığın yerde çalışır.
+            İnsanlar harcama takibini bırakır çünkü zahmetlidir. Cüzdan veriyi kendisi toplar; sana sadece karar vermek kalır.
           </p>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map((f) => (

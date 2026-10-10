@@ -1,4 +1,4 @@
-import { categoryLabel } from "./categories";
+import { BUCKETS, BUCKET_KEYS, categoryLabel } from "./categories";
 import { addDays, today } from "./dates";
 import type { User } from "./db";
 import { money } from "./format";
@@ -33,6 +33,14 @@ export async function weeklyDigest(user: User, now = new Date()): Promise<string
       lines.push(`• ${categoryLabel(c.category)}: ${money(c.total, user.currency)} (%${Math.round((c.total / s.expense) * 100)})`);
     }
   }
+  const expenses = week.filter((t) => t.type === "expense");
+  const byBucket = BUCKET_KEYS.map((b) => {
+    const total = round(expenses.filter((t) => t.bucket === b).reduce((sum, t) => sum + t.amount, 0));
+    return `${BUCKETS[b].label} ${money(total, user.currency)}`;
+  });
+  lines.push("", `Kovalar: ${byBucket.join(" · ")}`);
+  const pending = expenses.filter((t) => !t.bucket).length;
+  if (pending) lines.push(`⏳ ${pending} harcama kova bekliyor; panelde Bekleyenler'e göz at.`);
   lines.push("", `Günlük ortalama: ${money(round(s.expense / 7), user.currency)}`);
   return lines.join("\n");
 }

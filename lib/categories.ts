@@ -45,3 +45,36 @@ export function normalizeCategory(key: string, type: TxType): Category {
   if (isCategory(key, type)) return key as Category;
   return type === "expense" ? "diger" : "diger_gelir";
 }
+
+/** 50/30/20 kovaları. */
+export const BUCKETS = {
+  needs: { label: "Mecburi", hint: "Kira, fatura, market, ulaşım" },
+  life: { label: "Yaşam", hint: "Kafe, restoran, eğlence, alışveriş" },
+  free: { label: "Serbest", hint: "Birikim, gezi, hedefler" },
+} as const;
+
+export type Bucket = keyof typeof BUCKETS;
+export const BUCKET_KEYS = Object.keys(BUCKETS) as Bucket[];
+
+export function isBucket(v: unknown): v is Bucket {
+  return typeof v === "string" && v in BUCKETS;
+}
+
+/** Kategoriden tahmini kova; model kova önermediğinde kullanılır. */
+export const DEFAULT_BUCKET: Partial<Record<ExpenseCategory, Bucket>> = {
+  market: "needs",
+  ulasim: "needs",
+  faturalar: "needs",
+  kira: "needs",
+  saglik: "needs",
+  egitim: "needs",
+  yeme_icme: "life",
+  eglence: "life",
+  giyim: "life",
+  abonelik: "life",
+  kisisel_bakim: "life",
+  teknoloji: "life",
+  ev: "life",
+  seyahat: "free",
+  hediye: "free",
+};

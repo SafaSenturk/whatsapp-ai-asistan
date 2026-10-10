@@ -2,8 +2,8 @@ import Link from "next/link";
 
 // Taslak metindir; yayına almadan önce bir hukukçuya kontrol ettirin.
 export default function LegalPage() {
-  const company = process.env.NEXT_PUBLIC_COMPANY_NAME || "[Şirket unvanı]";
-  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "[iletişim e-postası]";
+  const company = process.env.COMPANY_NAME || "[Şirket unvanı]";
+  const email = process.env.CONTACT_EMAIL || "[iletişim e-postası]";
   return (
     <main className="mx-auto max-w-3xl space-y-6 px-4 py-12 text-sm leading-relaxed text-zinc-700">
       <Link href="/" className="font-semibold text-emerald-700">
@@ -18,16 +18,18 @@ export default function LegalPage() {
       <section className="space-y-2">
         <h2 className="text-lg font-semibold text-zinc-900">2. İşlenen veriler ve amaç</h2>
         <p>
-          E-posta, ad, WhatsApp numarası, Cüzdan&apos;a gönderdiğiniz mesajlar, fiş görselleri, sesli mesajlar ve
-          bunlardan çıkarılan harcama/gelir kayıtları; yalnızca hizmetin sunulması, raporlanması ve hesabınızın
-          yönetimi amacıyla işlenir. Görseller ve sesler kaydedilmez; yalnızca içerdikleri tutar bilgisi saklanır.
+          E-posta, ad, WhatsApp numarası ya da Telegram kullanıcı adı, Cüzdan&apos;a gönderdiğiniz mesajlar, fiş görselleri,
+          sesli mesajlar, Gmail hesabınızda kurduğunuz kodun gönderdiği banka bildirim e-postaları, gelir/gider planlarınız,
+          hedefleriniz, hesap bakiyeleriniz ve bunlardan çıkarılan harcama/gelir kayıtları; yalnızca hizmetin sunulması, raporlanması ve hesabınızın
+          yönetimi amacıyla işlenir. Görseller, sesler ve e-posta metinleri saklanmaz; yalnızca çıkarılan işlem bilgisi tutulur.
+          Banka şifresi ya da internet bankacılığı erişimi istenmez.
         </p>
       </section>
       <section className="space-y-2">
         <h2 className="text-lg font-semibold text-zinc-900">3. Aktarım</h2>
         <p>
           Mesaj içerikleri, kaydın çıkarılması için yapay zekâ hizmet sağlayıcısına (Google Gemini API) ve veriler
-          barındırma sağlayıcısına (Supabase) aktarılır. Veriler reklam amacıyla kullanılmaz ve üçüncü kişilere
+          barındırma sağlayıcısına (Supabase), mesajlar seçtiğiniz kanala (Telegram, WhatsApp) aktarılır. Veriler reklam amacıyla kullanılmaz ve üçüncü kişilere
           satılmaz.
         </p>
       </section>

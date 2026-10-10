@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { logout } from "@/app/actions";
 import { isAdmin, requireUser } from "@/lib/auth";
-import { missingEnv } from "@/lib/db";
+import { db, missingEnv } from "@/lib/db";
 import { isPro } from "@/lib/plans";
 
 const NAV = [
   { href: "/app", label: "Özet" },
+  { href: "/app/pending", label: "Bekleyenler" },
   { href: "/app/transactions", label: "İşlemler" },
-  { href: "/app/budgets", label: "Bütçeler" },
+  { href: "/app/planning", label: "Planlama" },
+  { href: "/app/goals", label: "Hedefler & Hesaplar" },
+  { href: "/app/budgets", label: "Kovalar & Bütçe" },
   { href: "/app/assistant", label: "Asistan" },
   { href: "/app/settings", label: "Ayarlar" },
   { href: "/app/billing", label: "Plan" },
@@ -35,6 +38,12 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
 
   const user = await requireUser();
   const nav = isAdmin(user) ? [...NAV, { href: "/app/admin", label: "Yönetim" }] : NAV;
+  const { count: pending } = await db()
+    .from("transactions")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("type", "expense")
+    .is("bucket", null);
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
@@ -56,9 +65,12 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
             <Link
               key={item.href}
               href={item.href}
-              className="whitespace-nowrap rounded-lg px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
+              className="flex items-center justify-between gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
             >
               {item.label}
+              {item.href === "/app/pending" && pending ? (
+                <span className="rounded-full bg-amber-100 px-1.5 text-xs font-medium tabular-nums text-amber-800">{pending}</span>
+              ) : null}
             </Link>
           ))}
         </nav>

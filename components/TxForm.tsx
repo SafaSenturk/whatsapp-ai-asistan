@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { addTransaction } from "@/app/actions";
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories";
+import { BUCKETS, BUCKET_KEYS, EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories";
 
 export default function TxForm({ today }: { today: string }) {
   const [type, setType] = useState<"expense" | "income">("expense");
@@ -36,10 +36,21 @@ export default function TxForm({ today }: { today: string }) {
           ))}
         </select>
       </div>
-      <div className="sm:col-span-2">
+      <div className={type === "expense" ? "sm:col-span-1" : "sm:col-span-2"}>
         <label className="label" htmlFor="description">Açıklama</label>
         <input id="description" name="description" maxLength={120} placeholder="Örn. Migros" className="input" />
       </div>
+      {type === "expense" && (
+        <div className="sm:col-span-1">
+          <label className="label" htmlFor="bucket">Kova</label>
+          <select id="bucket" name="bucket" className="input">
+            <option value="">Sonra seçerim</option>
+            {BUCKET_KEYS.map((b) => (
+              <option key={b} value={b}>{BUCKETS[b].label}</option>
+            ))}
+          </select>
+        </div>
+      )}
       <div className="sm:col-span-1">
         <label className="label" htmlFor="date">Tarih</label>
         <input id="date" name="date" type="date" defaultValue={today} max={today} className="input" />
